@@ -1,11 +1,11 @@
-﻿using System;
-using System.Linq;
-
-namespace _01.Sorting
+﻿namespace _01.Sorting
 {
-    class Program
+    using System;
+    using System.Linq;
+
+    class StartUp
     {
-        static void Main(string[] args)
+        static void Main()
         {
             string inputLine = Console.ReadLine()?.Trim();
 
@@ -16,7 +16,7 @@ namespace _01.Sorting
 
             int[] numbers = inputLine.Split(' ').Select(int.Parse).ToArray();
 
-            BubbleSort.Sort(numbers);
+            QuickSort.Sort(numbers);
 
             Console.WriteLine(string.Join(" ", numbers));
         }
