@@ -16,7 +16,7 @@ namespace _01.Sorting
 
             int[] numbers = inputLine.Split(' ').Select(int.Parse).ToArray();
 
-            InsertionSort.Sort(numbers);
+            BubbleSort.Sort(numbers);
 
             Console.WriteLine(string.Join(" ", numbers));
         }
