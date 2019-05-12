@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01.Fibonacci", "01.Fibonacci\01.Fibonacci.csproj", "{5585C0DE-FBFA-462D-9F15-13DAF827163A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02.LongestIncreasingSubsequence", "02.LongestIncreasingSubsequence\02.LongestIncreasingSubsequence.csproj", "{78D9B584-8842-4F33-AB08-610ACA4E933A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03.MoveDownOrRight", "03.MoveDownOrRight\03.MoveDownOrRight.csproj", "{046302BE-D3BD-406C-9602-0294A1295385}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04.RodCutting", "04.RodCutting\04.RodCutting.csproj", "{BFB743A5-563B-4CFD-819F-F54417495DA0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5585C0DE-FBFA-462D-9F15-13DAF827163A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5585C0DE-FBFA-462D-9F15-13DAF827163A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5585C0DE-FBFA-462D-9F15-13DAF827163A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5585C0DE-FBFA-462D-9F15-13DAF827163A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78D9B584-8842-4F33-AB08-610ACA4E933A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78D9B584-8842-4F33-AB08-610ACA4E933A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78D9B584-8842-4F33-AB08-610ACA4E933A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78D9B584-8842-4F33-AB08-610ACA4E933A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{046302BE-D3BD-406C-9602-0294A1295385}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{046302BE-D3BD-406C-9602-0294A1295385}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{046302BE-D3BD-406C-9602-0294A1295385}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{046302BE-D3BD-406C-9602-0294A1295385}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFB743A5-563B-4CFD-819F-F54417495DA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFB743A5-563B-4CFD-819F-F54417495DA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFB743A5-563B-4CFD-819F-F54417495DA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFB743A5-563B-4CFD-819F-F54417495DA0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D42CBA76-8B33-46C8-9C37-F090AA941CF4}
+	EndGlobalSection
+EndGlobal
