@@ -1,105 +1,82 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Wintellect.PowerCollections;
+
 namespace _1.CableNetwork
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Wintellect.PowerCollections;
-
-    public class Edge
-    {
-        public int FirstNode { get; set; }
-
-        public int SecondNode { get; set; }
-
-        public int Cost { get; set; }
-    }
-
     class Program
     {
-        static Dictionary<int, List<Edge>> graph;
-        static HashSet<int> spanningThree;
-
-        static int totalBudget = 0;
-        static int usedBudget = 0;
+        private static HashSet<int> connectedNodes = new HashSet<int>();
+        private static List<Edge>[] graph;
+        private static int currentBudget;
 
         static void Main(string[] args)
         {
-            totalBudget = int.Parse(Console.ReadLine().Split(' ')[1]);
-            int nodesCount = int.Parse(Console.ReadLine().Split(' ')[1]);
-            int edgesCount = int.Parse(Console.ReadLine().Split(' ')[1]);
+            int totalBudget = int.Parse(Console.ReadLine().Split(new[] { ": " }, StringSplitOptions.RemoveEmptyEntries)[1]);
+            currentBudget = totalBudget;
+            int nodesCount = int.Parse(Console.ReadLine().Split(new[] { ": " }, StringSplitOptions.RemoveEmptyEntries)[1]);
+            int edgesCount = int.Parse(Console.ReadLine().Split(new[] { ": " }, StringSplitOptions.RemoveEmptyEntries)[1]);
 
-            graph = new Dictionary<int, List<Edge>>();
-            spanningThree = new HashSet<int>();
+            graph = new List<Edge>[nodesCount];
+            for (int i = 0; i < nodesCount; i++)
+            {
+                graph[i] = new List<Edge>();
+            }
 
-            FillGraph(edgesCount);
+            for (int i = 0; i < edgesCount; i++)
+            {
+                string[] infoTokens = Console.ReadLine().Split(' ');
+
+                int firstNode = int.Parse(infoTokens[0]);
+                int secondNode = int.Parse(infoTokens[1]);
+                int cost = int.Parse(infoTokens[2]);
+
+                if (infoTokens.Length > 3)
+                {
+                    connectedNodes.Add(firstNode);
+                    connectedNodes.Add(secondNode);
+                }
+
+                Edge edge = new Edge
+                {
+                    First = firstNode,
+                    Second = secondNode,
+                    Cost = cost
+                };
+
+                graph[firstNode].Add(edge);
+                graph[secondNode].Add(edge);
+            }
 
             Prim();
 
-            Console.WriteLine($"Budget used: {usedBudget}");
+            Console.WriteLine("Budget used: " + (totalBudget - currentBudget));
         }
 
-        private static void FillGraph(int edgesCount)
+        private static void Prim()
         {
-            for (int i = 0; i < edgesCount; i++)
+            var queue = new OrderedBag<Edge>(Comparer<Edge>.Create((a, b) => a.Cost - b.Cost));
+
+            queue.AddMany(connectedNodes.SelectMany(cn => graph[cn]));
+
+            while (queue.Count > 0)
             {
-                var edgeTokens = Console.ReadLine().Split(' ');
+                Edge minCostEdge = queue.RemoveFirst();
+                int first = minCostEdge.First;
+                int second = minCostEdge.Second;
+                int cost = minCostEdge.Cost;
 
-                var edge = new Edge
-                {
-                    FirstNode = int.Parse(edgeTokens[0]),
-                    SecondNode = int.Parse(edgeTokens[1]),
-                    Cost = int.Parse(edgeTokens[2])
-                };
+                int notThreeNode = -1;
 
-                if (!graph.ContainsKey(edge.FirstNode))
+                if (connectedNodes.Contains(first) && !connectedNodes.Contains(second))
                 {
-                    graph.Add(edge.FirstNode, new List<Edge>());
+                    notThreeNode = second;
                 }
 
-                graph[edge.FirstNode].Add(edge);
-
-                if (!graph.ContainsKey(edge.SecondNode))
+                if (connectedNodes.Contains(second) && !connectedNodes.Contains(first))
                 {
-                    graph.Add(edge.SecondNode, new List<Edge>());
-                }
-
-                graph[edge.SecondNode].Add(edge);
-
-                //edgeTokens = 7 8 4  =>  (firstNode, secondNode, Cost)
-                //edgeTokens = 0 8 5 connected => add 0 and 8 in spanningThree (because the nodes are connected)
-                if (edgeTokens.Length > 3)
-                {
-                    spanningThree.Add(edge.FirstNode);
-                    spanningThree.Add(edge.SecondNode);
-                }
-            }
-            
-        }
-
-        static void Prim()
-        {
-            var queue = new OrderedBag<Edge>(Comparer<Edge>.Create((e1,e2) => e1.Cost - e2.Cost));
-
-            queue.AddMany(spanningThree.SelectMany(n => graph[n]));     // Adding all graph edges in queue
-
-            while (queue.Any())
-            {
-                var minEdge = queue.RemoveFirst();
-
-                var notThreeNode = -1;
-
-                //if spanningThree contains firstNode and does not contain second Node
-                if (spanningThree.Contains(minEdge.FirstNode)
-                    && !spanningThree.Contains(minEdge.SecondNode))
-                {
-                    notThreeNode = minEdge.SecondNode;
-                }
-
-                if (!spanningThree.Contains(minEdge.FirstNode)
-                    && spanningThree.Contains(minEdge.SecondNode))
-                {
-                    notThreeNode = minEdge.FirstNode;
+                    notThreeNode = first;
                 }
 
                 if (notThreeNode == -1)
@@ -107,20 +84,25 @@ namespace _1.CableNetwork
                     continue;
                 }
 
-                if (totalBudget >= minEdge.Cost)
-                {
-                    totalBudget -= minEdge.Cost;
-                    usedBudget += minEdge.Cost;
-                }
-                else
+                if (currentBudget < cost)
                 {
                     break;
                 }
 
-                spanningThree.Add(notThreeNode);      //adding to the network
+                currentBudget -= cost;
 
-                queue.AddMany(graph[notThreeNode]);   //adding to queue all new node edges
+                connectedNodes.Add(notThreeNode);
+                queue.AddMany(graph[notThreeNode]);
             }
         }
+    }
+
+    class Edge
+    {
+        public int First { get; set; }
+
+        public int Second { get; set; }
+
+        public int Cost { get; set; }
     }
 }
